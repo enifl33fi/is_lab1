@@ -10,6 +10,7 @@ import com.enifl33fi.lab1.api.model.security.RefreshToken;
 import com.enifl33fi.lab1.api.model.user.AdminRegistrationRequest;
 import com.enifl33fi.lab1.api.model.user.Role;
 import com.enifl33fi.lab1.api.model.user.User;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -31,6 +32,7 @@ public class AuthenticationService {
   private final RefreshTokenService refreshTokenService;
   private final ValidatingService validatingService;
 
+  @Transactional
   public Optional<AuthenticationResponse> register(RegisterRequestDto userDto) {
     validatingService.validateEntity(userDto);
     if (!userService.isUsernameUnique(userDto.getUsername())) {
@@ -73,6 +75,10 @@ public class AuthenticationService {
   public void rejectRequest(String username) {
     AdminRegistrationRequest request = userService.getRequest(username);
     userService.deleteRequest(request);
+  }
+
+  public List<AdminRegistrationRequest> getRequests() {
+    return userService.getRequests();
   }
 
   public AuthenticationResponse getTokens(String refreshToken) {

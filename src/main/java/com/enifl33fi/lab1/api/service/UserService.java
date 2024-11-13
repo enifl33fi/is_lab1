@@ -44,6 +44,10 @@ public class UserService implements UserDetailsService {
     adminRegistrationRequestRepository.delete(request);
   }
 
+  public List<AdminRegistrationRequest> getRequests() {
+    return adminRegistrationRequestRepository.findAll();
+  }
+
   public boolean isUsernameUnique(String username) {
     Optional<User> userFromDB = userRepository.findById(username);
     Optional<AdminRegistrationRequest> requestFromDB =

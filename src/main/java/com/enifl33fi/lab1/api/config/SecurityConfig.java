@@ -48,6 +48,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                         AntPathRequestMatcher.antMatcher("/swagger-ui/**"),
                         AntPathRequestMatcher.antMatcher("/v3/api-docs/**"))
                     .permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher("/error"))
+                    .hasAuthority("ADMIN")
                     .anyRequest()
                     .authenticated())
         .sessionManagement(
