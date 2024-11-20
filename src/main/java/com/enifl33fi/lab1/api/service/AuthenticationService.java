@@ -2,7 +2,8 @@ package com.enifl33fi.lab1.api.service;
 
 import com.enifl33fi.lab1.api.dto.request.LoginRequestDto;
 import com.enifl33fi.lab1.api.dto.request.RegisterRequestDto;
-import com.enifl33fi.lab1.api.dto.response.AuthenticationResponse;
+import com.enifl33fi.lab1.api.dto.response.AdminRegistrationRequestResponseDto;
+import com.enifl33fi.lab1.api.dto.response.AuthenticationResponseDto;
 import com.enifl33fi.lab1.api.exception.RefreshTokenException;
 import com.enifl33fi.lab1.api.exception.UsernameNotUniqueException;
 import com.enifl33fi.lab1.api.mapper.UserMapper;
@@ -12,6 +13,7 @@ import com.enifl33fi.lab1.api.model.user.Role;
 import com.enifl33fi.lab1.api.model.user.User;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,8 +34,7 @@ public class AuthenticationService {
   private final RefreshTokenService refreshTokenService;
   private final ValidatingService validatingService;
 
-  @Transactional
-  public Optional<AuthenticationResponse> register(RegisterRequestDto userDto) {
+  public Optional<AuthenticationResponseDto> register(RegisterRequestDto userDto) {
     validatingService.validateEntity(userDto);
     if (!userService.isUsernameUnique(userDto.getUsername())) {
       throw new UsernameNotUniqueException(userDto.getUsername());
@@ -48,7 +49,7 @@ public class AuthenticationService {
     return Optional.empty();
   }
 
-  public AuthenticationResponse login(LoginRequestDto userDto) {
+  public AuthenticationResponseDto login(LoginRequestDto userDto) {
     validatingService.validateEntity(userDto);
 
     Authentication authentication =
@@ -77,11 +78,13 @@ public class AuthenticationService {
     userService.deleteRequest(request);
   }
 
-  public List<AdminRegistrationRequest> getRequests() {
-    return userService.getRequests();
+  public List<AdminRegistrationRequestResponseDto> getRequests() {
+    return userService.getRequests().stream()
+        .map(userMapper::mapAdminRegistrationRequestToAdminRegistrationResponseDto)
+        .collect(Collectors.toList());
   }
 
-  public AuthenticationResponse getTokens(String refreshToken) {
+  public AuthenticationResponseDto getTokens(String refreshToken) {
     if (jwtService.validateRefreshToken(refreshToken)) {
       RefreshToken token = refreshTokenService.getByToken(refreshToken);
       User user = token.getUser();
@@ -95,11 +98,11 @@ public class AuthenticationService {
     return userService.isUsernameUnique(username);
   }
 
-  private AuthenticationResponse getResponseByUser(User user) {
+  private AuthenticationResponseDto getResponseByUser(User user) {
     String accessToken = jwtService.generateAccessToken(user);
     String refreshToken = jwtService.generateRefreshToken(user);
     refreshTokenService.saveToken(refreshToken, user);
-    return AuthenticationResponse.builder()
+    return AuthenticationResponseDto.builder()
         .accessToken(accessToken)
         .refreshToken(refreshToken)
         .build();

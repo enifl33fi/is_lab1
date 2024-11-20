@@ -1,0 +1,37 @@
+package com.enifl33fi.lab1.api.model.product;
+
+import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@EqualsAndHashCode(callSuper = true)
+public class Person extends OwnedEntity {
+  @Column(nullable = false)
+  private String name;
+
+  @Column(nullable = false)
+  @Enumerated(value = EnumType.STRING)
+  private Color eyeColor;
+
+  @Column(nullable = false)
+  @Enumerated(value = EnumType.STRING)
+  private Color hairColor;
+
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private Location location;
+
+  @Column(nullable = false)
+  private java.time.ZonedDateTime birthday;
+
+  @Column(nullable = false)
+  @Enumerated(value = EnumType.STRING)
+  private Country nationality;
+}

@@ -1,0 +1,25 @@
+package com.enifl33fi.lab1.api.model.product;
+
+import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import lombok.*;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@EqualsAndHashCode(callSuper = true)
+public class Location extends OwnedEntity {
+  @Column(nullable = false)
+  private long x;
+
+  @Column(nullable = false)
+  private long y;
+
+  @Column(nullable = false)
+  private Integer z;
+
+  @Column(nullable = false)
+  private String name;
+}

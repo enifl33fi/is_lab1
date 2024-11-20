@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.mapper;
 
 import com.enifl33fi.lab1.api.dto.request.RegisterRequestDto;
+import com.enifl33fi.lab1.api.dto.response.AdminRegistrationRequestResponseDto;
 import com.enifl33fi.lab1.api.model.user.AdminRegistrationRequest;
 import com.enifl33fi.lab1.api.model.user.User;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,14 @@ public class UserMapper {
     return AdminRegistrationRequest.builder()
         .username(userDto.getUsername())
         .password(passwordEncoder.encode(userDto.getPassword()))
+        .build();
+  }
+
+  public AdminRegistrationRequestResponseDto
+      mapAdminRegistrationRequestToAdminRegistrationResponseDto(
+          AdminRegistrationRequest adminRegistrationRequest) {
+    return AdminRegistrationRequestResponseDto.builder()
+        .username(adminRegistrationRequest.getUsername())
         .build();
   }
 }

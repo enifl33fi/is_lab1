@@ -3,7 +3,7 @@ package com.enifl33fi.lab1.api.controller;
 import com.enifl33fi.lab1.api.dto.request.LoginRequestDto;
 import com.enifl33fi.lab1.api.dto.request.RefreshJwtRequestDto;
 import com.enifl33fi.lab1.api.dto.request.RegisterRequestDto;
-import com.enifl33fi.lab1.api.dto.response.AuthenticationResponse;
+import com.enifl33fi.lab1.api.dto.response.AuthenticationResponseDto;
 import com.enifl33fi.lab1.api.service.AuthenticationService;
 import java.util.Collections;
 import java.util.Map;
@@ -22,10 +22,10 @@ public class AuthenticationController {
   @PostMapping("/register")
   @ResponseBody
   public ResponseEntity<?> register(@RequestBody RegisterRequestDto userDto) {
-    Optional<AuthenticationResponse> res = authenticationService.register(userDto);
+    Optional<AuthenticationResponseDto> resOpt = authenticationService.register(userDto);
 
-    if (res.isPresent()) {
-      return ResponseEntity.ok(res.get());
+    if (resOpt.isPresent()) {
+      return ResponseEntity.ok(resOpt.get());
     } else {
       return ResponseEntity.ok().build();
     }
@@ -33,13 +33,13 @@ public class AuthenticationController {
 
   @PostMapping("/login")
   @ResponseBody
-  public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequestDto userDto) {
+  public ResponseEntity<AuthenticationResponseDto> login(@RequestBody LoginRequestDto userDto) {
     return ResponseEntity.ok(authenticationService.login(userDto));
   }
 
   @PostMapping("/refresh")
   @ResponseBody
-  public ResponseEntity<AuthenticationResponse> getToken(
+  public ResponseEntity<AuthenticationResponseDto> getToken(
       @RequestBody RefreshJwtRequestDto request) {
     return ResponseEntity.ok(authenticationService.getTokens(request.getRefreshToken()));
   }

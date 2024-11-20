@@ -3,6 +3,7 @@ package com.enifl33fi.lab1.api.exception;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -21,7 +22,8 @@ public class ExceptionApiHandler {
     UsernameNotFoundException.class,
     UsernameNotUniqueException.class,
     ConstraintViolationException.class,
-    MethodArgumentNotValidException.class
+    MethodArgumentNotValidException.class,
+    NotFoundException.class
   })
   public ResponseEntity<?> badRequestHandler() {
     return ResponseEntity.badRequest().build();
@@ -43,7 +45,7 @@ public class ExceptionApiHandler {
 
   @ResponseStatus(code = HttpStatus.FORBIDDEN)
   @ResponseBody
-  @ExceptionHandler({RefreshTokenException.class})
+  @ExceptionHandler({RefreshTokenException.class, AccessDeniedException.class})
   public ResponseEntity<?> forbiddenHandler() {
     return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
   }

@@ -1,0 +1,63 @@
+package com.enifl33fi.lab1.api.controller.entity;
+
+import com.enifl33fi.lab1.api.dto.request.entity.OwnedEntityRequestDto;
+import com.enifl33fi.lab1.api.dto.response.entity.OwnedEntityResponseDto;
+import com.enifl33fi.lab1.api.mapper.entity.OwnedEntityMapper;
+import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
+import com.enifl33fi.lab1.api.service.entity.OwnedEntityService;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RequiredArgsConstructor
+public class OwnedEntityController<
+    E extends OwnedEntity,
+    REQ extends OwnedEntityRequestDto,
+    RES extends OwnedEntityResponseDto,
+    MAP extends OwnedEntityMapper<E, REQ, RES>,
+    REPO extends JpaRepository<E, Integer>,
+    SERV extends OwnedEntityService<E, REQ, RES, MAP, REPO>> {
+
+  private final SERV service;
+
+  @GetMapping("/all")
+  @ResponseBody
+  public ResponseEntity<List<RES>> getAllEntities() {
+    return ResponseEntity.ok(service.getAllEntities());
+  }
+
+  @GetMapping("/own")
+  @ResponseBody
+  public ResponseEntity<List<RES>> getOwnEntities() {
+    return ResponseEntity.ok(service.getAllEditableEntities());
+  }
+
+  @GetMapping("/{id}")
+  @ResponseBody
+  public ResponseEntity<RES> getEntity(@PathVariable("id") Integer id) {
+    return ResponseEntity.ok(service.getEntityById(id));
+  }
+
+  @PostMapping
+  @ResponseBody
+  public ResponseEntity<?> saveEntity(@RequestBody REQ entity) {
+    service.saveEntity(entity);
+    return ResponseEntity.ok().build();
+  }
+
+  @PatchMapping("/{id}")
+  @ResponseBody
+  public ResponseEntity<?> updateEntity(@PathVariable("id") Integer id, @RequestBody REQ entity) {
+    service.updateEntity(entity, id);
+    return ResponseEntity.ok().build();
+  }
+
+  @DeleteMapping("/{id}")
+  @ResponseBody
+  public ResponseEntity<?> deleteEntity(@PathVariable("id") Integer id) {
+    service.deleteEntity(id);
+    return ResponseEntity.ok().build();
+  }
+}
