@@ -3,8 +3,7 @@ package com.enifl33fi.lab1.api.model.product;
 import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +16,7 @@ public class Organization extends OwnedEntity {
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "official_address_id", referencedColumnName = "id", nullable = false)
-  @OnDelete(action = OnDeleteAction.CASCADE)
+  @CascadeOnDelete
   private Address officialAddress;
 
   @Column(nullable = false)
@@ -34,6 +33,6 @@ public class Organization extends OwnedEntity {
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "postal_address_id", referencedColumnName = "id", nullable = false)
-  @OnDelete(action = OnDeleteAction.CASCADE)
+  @CascadeOnDelete
   private Address postalAddress;
 }

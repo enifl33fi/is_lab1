@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 @MappedSuperclass
 @Getter
@@ -20,7 +19,7 @@ public class OwnedEntity {
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "created_by", referencedColumnName = "username", nullable = false)
-  @OnDelete(action = OnDeleteAction.CASCADE)
+  @CascadeOnDelete
   private User user;
 
   @Column(name = "creation_date", nullable = false, updatable = false)
