@@ -6,11 +6,12 @@ import com.enifl33fi.lab1.api.dto.response.entity.OwnedEntityResponseDto;
 import com.enifl33fi.lab1.api.exception.NotFoundException;
 import com.enifl33fi.lab1.api.mapper.entity.OwnedEntityMapper;
 import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
+import com.enifl33fi.lab1.api.repository.entity.OwnedEntityRepository;
 import com.enifl33fi.lab1.api.service.ValidatingService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class OwnedEntityService<
     REQ extends OwnedEntityRequestDto,
     RES extends OwnedEntityResponseDto,
     MAP extends OwnedEntityMapper<E, REQ, RES>,
-    REPO extends JpaRepository<E, Integer>> {
+    REPO extends OwnedEntityRepository<E>> {
   private final MAP mapper;
   private final REPO repo;
   private final ValidatingService validatingService;
@@ -33,6 +34,11 @@ public class OwnedEntityService<
         .map(mapper::mapToResponse)
         .filter((AccessAware::isHasAccess))
         .collect(Collectors.toList());
+  }
+
+  public List<RES> getEntitiesByIdPrefix(String prefix, int n) {
+    List<E> entities = repo.findFirstNByIdPrefix(prefix, PageRequest.of(0, n));
+    return entities.stream().map(mapper::mapToResponse).collect(Collectors.toList());
   }
 
   public RES getEntityById(Integer id) {

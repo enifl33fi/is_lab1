@@ -4,7 +4,7 @@ import com.enifl33fi.lab1.api.dto.request.entity.ProductRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.ProductResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.ProductMapper;
 import com.enifl33fi.lab1.api.model.product.Product;
-import com.enifl33fi.lab1.api.repository.ProductRepository;
+import com.enifl33fi.lab1.api.repository.entity.ProductRepository;
 import com.enifl33fi.lab1.api.service.entity.ProductService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

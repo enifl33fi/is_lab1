@@ -1,15 +1,14 @@
-package com.enifl33fi.lab1.api.repository;
+package com.enifl33fi.lab1.api.repository.entity;
 
 import com.enifl33fi.lab1.api.model.product.Product;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends OwnedEntityRepository<Product> {
   @Query("SELECT COUNT(p) FROM Product p WHERE p.owner.id < :ownerId")
   int countByOwnerLessThan(@Param("ownerId") Integer ownerId);
 

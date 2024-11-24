@@ -5,7 +5,7 @@ import com.enifl33fi.lab1.api.dto.response.entity.OrganizationResponseDto;
 import com.enifl33fi.lab1.api.exception.NotFoundException;
 import com.enifl33fi.lab1.api.model.product.Address;
 import com.enifl33fi.lab1.api.model.product.Organization;
-import com.enifl33fi.lab1.api.repository.AddressRepository;
+import com.enifl33fi.lab1.api.repository.entity.AddressRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

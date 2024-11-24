@@ -4,10 +4,10 @@ import com.enifl33fi.lab1.api.dto.request.entity.OwnedEntityRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.OwnedEntityResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.OwnedEntityMapper;
 import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
+import com.enifl33fi.lab1.api.repository.entity.OwnedEntityRepository;
 import com.enifl33fi.lab1.api.service.entity.OwnedEntityService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ public class OwnedEntityController<
     REQ extends OwnedEntityRequestDto,
     RES extends OwnedEntityResponseDto,
     MAP extends OwnedEntityMapper<E, REQ, RES>,
-    REPO extends JpaRepository<E, Integer>,
+    REPO extends OwnedEntityRepository<E>,
     SERV extends OwnedEntityService<E, REQ, RES, MAP, REPO>> {
 
   private final SERV service;
@@ -38,6 +38,14 @@ public class OwnedEntityController<
   @ResponseBody
   public ResponseEntity<RES> getEntity(@PathVariable("id") Integer id) {
     return ResponseEntity.ok(service.getEntityById(id));
+  }
+
+  @GetMapping("/prefix/{prefix}")
+  @ResponseBody
+  public ResponseEntity<List<RES>> getEntitiesByPrefix(
+      @PathVariable("prefix") String prefix,
+      @RequestParam(name = "count", defaultValue = "10") int count) {
+    return ResponseEntity.ok(service.getEntitiesByIdPrefix(prefix, count));
   }
 
   @PostMapping

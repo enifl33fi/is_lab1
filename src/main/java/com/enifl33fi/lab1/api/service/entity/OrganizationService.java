@@ -4,7 +4,7 @@ import com.enifl33fi.lab1.api.dto.request.entity.OrganizationRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.OrganizationResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.OrganizationMapper;
 import com.enifl33fi.lab1.api.model.product.Organization;
-import com.enifl33fi.lab1.api.repository.OrganizationRepository;
+import com.enifl33fi.lab1.api.repository.entity.OrganizationRepository;
 import com.enifl33fi.lab1.api.service.ValidatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

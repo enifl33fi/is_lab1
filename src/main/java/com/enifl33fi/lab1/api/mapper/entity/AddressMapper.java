@@ -5,7 +5,7 @@ import com.enifl33fi.lab1.api.dto.response.entity.AddressResponseDto;
 import com.enifl33fi.lab1.api.exception.NotFoundException;
 import com.enifl33fi.lab1.api.model.product.Address;
 import com.enifl33fi.lab1.api.model.product.Location;
-import com.enifl33fi.lab1.api.repository.LocationRepository;
+import com.enifl33fi.lab1.api.repository.entity.LocationRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

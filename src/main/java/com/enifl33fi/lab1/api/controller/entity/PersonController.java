@@ -4,7 +4,7 @@ import com.enifl33fi.lab1.api.dto.request.entity.PersonRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.PersonResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.PersonMapper;
 import com.enifl33fi.lab1.api.model.product.Person;
-import com.enifl33fi.lab1.api.repository.PersonRepository;
+import com.enifl33fi.lab1.api.repository.entity.PersonRepository;
 import com.enifl33fi.lab1.api.service.entity.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -4,7 +4,7 @@ import com.enifl33fi.lab1.api.dto.request.entity.ProductRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.ProductResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.ProductMapper;
 import com.enifl33fi.lab1.api.model.product.*;
-import com.enifl33fi.lab1.api.repository.*;
+import com.enifl33fi.lab1.api.repository.entity.ProductRepository;
 import com.enifl33fi.lab1.api.service.ValidatingService;
 import java.util.List;
 import java.util.stream.Collectors;
