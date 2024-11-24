@@ -6,6 +6,7 @@ import com.enifl33fi.lab1.api.mapper.entity.AddressMapper;
 import com.enifl33fi.lab1.api.model.product.Address;
 import com.enifl33fi.lab1.api.repository.entity.AddressRepository;
 import com.enifl33fi.lab1.api.service.ValidatingService;
+import com.enifl33fi.lab1.api.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,8 @@ public class AddressService
   public AddressService(
       ValidatingService validatingService,
       AddressRepository addressRepository,
+      WebSocketService webSocketService,
       AddressMapper addressMapper) {
-    super(addressMapper, addressRepository, validatingService);
+    super(addressMapper, addressRepository, validatingService, webSocketService, "address");
   }
 }

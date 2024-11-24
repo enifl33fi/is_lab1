@@ -6,6 +6,7 @@ import com.enifl33fi.lab1.api.mapper.entity.ProductMapper;
 import com.enifl33fi.lab1.api.model.product.*;
 import com.enifl33fi.lab1.api.repository.entity.ProductRepository;
 import com.enifl33fi.lab1.api.service.ValidatingService;
+import com.enifl33fi.lab1.api.service.WebSocketService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j2;
@@ -25,8 +26,9 @@ public class ProductService
   public ProductService(
       ValidatingService validatingService,
       ProductRepository productRepository,
+      WebSocketService webSocketService,
       ProductMapper productMapper) {
-    super(productMapper, productRepository, validatingService);
+    super(productMapper, productRepository, validatingService, webSocketService, "product");
     this.productRepository = productRepository;
     this.productMapper = productMapper;
   }

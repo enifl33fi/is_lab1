@@ -8,6 +8,7 @@ import com.enifl33fi.lab1.api.mapper.entity.OwnedEntityMapper;
 import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
 import com.enifl33fi.lab1.api.repository.entity.OwnedEntityRepository;
 import com.enifl33fi.lab1.api.service.ValidatingService;
+import com.enifl33fi.lab1.api.service.WebSocketService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,13 @@ public class OwnedEntityService<
   private final MAP mapper;
   private final REPO repo;
   private final ValidatingService validatingService;
+  private final WebSocketService webSocketService;
+  private final String entityType;
+
+  protected void notifyClients() {
+    List<RES> entities = getAllEntities();
+    webSocketService.notifyEntitiesChanged(entityType, entities);
+  }
 
   public List<RES> getAllEntities() {
     return repo.findAll().stream().map(mapper::mapToResponse).collect(Collectors.toList());
@@ -54,6 +62,7 @@ public class OwnedEntityService<
   public void saveEntity(REQ dto) {
     validatingService.validateEntity(dto);
     repo.save(mapper.mapFromRequest(dto));
+    notifyClients();
   }
 
   @Transactional
@@ -69,10 +78,12 @@ public class OwnedEntityService<
     updatedEntity.setCreationDate(existingEntity.getCreationDate());
 
     repo.save(updatedEntity);
+    notifyClients();
   }
 
   @Transactional
   public void deleteEntity(Integer id) {
     repo.deleteById(id);
+    notifyClients();
   }
 }

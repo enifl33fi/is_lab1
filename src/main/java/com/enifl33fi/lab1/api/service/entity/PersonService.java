@@ -6,6 +6,7 @@ import com.enifl33fi.lab1.api.mapper.entity.PersonMapper;
 import com.enifl33fi.lab1.api.model.product.Person;
 import com.enifl33fi.lab1.api.repository.entity.PersonRepository;
 import com.enifl33fi.lab1.api.service.ValidatingService;
+import com.enifl33fi.lab1.api.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,8 @@ public class PersonService
   public PersonService(
       ValidatingService validatingService,
       PersonRepository personRepository,
+      WebSocketService webSocketService,
       PersonMapper personMapper) {
-    super(personMapper, personRepository, validatingService);
+    super(personMapper, personRepository, validatingService, webSocketService, "person");
   }
 }
