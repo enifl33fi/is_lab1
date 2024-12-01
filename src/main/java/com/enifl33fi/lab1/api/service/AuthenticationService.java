@@ -105,6 +105,8 @@ public class AuthenticationService {
     return AuthenticationResponseDto.builder()
         .accessToken(accessToken)
         .refreshToken(refreshToken)
+        .username(user.getUsername())
+        .isAdmin(user.getRole().equals(Role.ADMIN))
         .build();
   }
 }
