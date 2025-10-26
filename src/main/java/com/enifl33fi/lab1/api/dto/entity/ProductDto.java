@@ -13,17 +13,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDto {
-  @NotBlank private String name;
+  @NotBlank
+  private String name;
 
-  @NotNull private UnitOfMeasure unitOfMeasure;
-
-  @NotNull @Positive private Integer price;
-
-  @NotNull private Integer manufactureCost;
-
-  @NotNull @Positive private Integer rating;
-
-  @Size(min = 28, max = 46)
   @NotNull
-  private String partNumber;
+  private UnitOfMeasure unitOfMeasure;
+
+  @NotNull
+  @Positive
+  private Float price;
+
+  @NotNull
+  private Integer manufactureCost;
+
+  @NotNull
+  @Positive
+  private Integer rating;
 }

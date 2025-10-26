@@ -12,14 +12,11 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 public class Location extends OwnedEntity {
   @Column(nullable = false)
-  private long x;
+  private Float x;
 
   @Column(nullable = false)
-  private long y;
+  private Float y;
 
   @Column(nullable = false)
-  private Integer z;
-
-  @Column(nullable = false)
-  private String name;
+  private Float z;
 }

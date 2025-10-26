@@ -23,8 +23,8 @@ public class Product extends OwnedEntity {
   @Enumerated(value = EnumType.STRING)
   private UnitOfMeasure unitOfMeasure;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "organization_id", referencedColumnName = "id", nullable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "organization_id", referencedColumnName = "id")
   @CascadeOnDelete
   private Organization manufacturer;
 
@@ -37,11 +37,8 @@ public class Product extends OwnedEntity {
   @Column(nullable = false)
   private Integer rating;
 
-  @Column(nullable = false, unique = true)
-  private String partNumber;
-
-  @OneToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "person_id", referencedColumnName = "id")
   @CascadeOnDelete
   private Person owner;
 }

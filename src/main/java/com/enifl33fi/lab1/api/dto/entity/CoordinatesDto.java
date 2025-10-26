@@ -10,8 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CoordinatesDto {
-  @Min(value = -372)
-  private int x;
+  @NotNull
+  @Min(value = -444)
+  private Float x;
 
-  @NotNull private Float y;
+  @NotNull
+  @Min(value = -356)
+  private Double y;
 }

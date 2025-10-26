@@ -1,5 +1,6 @@
 package com.enifl33fi.lab1.api.dto.entity;
 
+import com.enifl33fi.lab1.api.model.product.OrganizationType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -11,13 +12,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrganizationDto {
-  @NotBlank private String name;
+  @NotBlank
+  private String name;
 
-  @NotNull @Positive private Float annualTurnover;
+  @Positive
+  private Integer annualTurnover;
 
-  @Positive private long employeesCount;
+  @NotNull
+  @Positive
+  private Long employeesCount;
 
-  @NotNull private String fullName;
+  @NotNull
+  @Positive
+  private Float rating;
 
-  @NotNull @Positive private Float rating;
+  @NotNull
+  private OrganizationType type;
 }

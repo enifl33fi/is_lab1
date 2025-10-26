@@ -29,6 +29,10 @@ public abstract class PersonMapper
   public abstract Person mapFromRequest(PersonRequestDto request);
 
   protected Location findLocationById(Integer id) {
+    if (id == null) {
+      return null;
+    }
+
     return locationRepository
         .findById(id)
         .orElseThrow(() -> new NotFoundException("Location not found"));

@@ -27,13 +27,14 @@ public abstract class OrganizationMapper
     @Mapping(
         target = "officialAddress",
         expression = "java(findAddressById(request.getOfficialAddressId()))"),
-    @Mapping(
-        target = "postalAddress",
-        expression = "java(findAddressById(request.getPostalAddressId()))"),
   })
   public abstract Organization mapFromRequest(OrganizationRequestDto request);
 
   protected Address findAddressById(Integer id) {
+    if (id == null) {
+      return null;
+    }
+
     return addressRepository
         .findById(id)
         .orElseThrow(() -> new NotFoundException("Address not found"));

@@ -9,11 +9,12 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class ProductRequestDto extends ProductDto implements OwnedEntityRequestDto {
-  @NotNull private Integer coordinatesId;
+  @NotNull
+  private Integer coordinatesId;
 
-  @NotNull private Integer manufacturerId;
+  private Integer manufacturerId;
 
-  @NotNull private Integer ownerId;
+  private Integer ownerId;
 
   private Boolean adminPermission;
 }

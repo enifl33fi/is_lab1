@@ -14,8 +14,8 @@ public class Address extends OwnedEntity {
   @Column(nullable = false)
   private String zipCode;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "location_id", referencedColumnName = "id")
   @CascadeOnDelete
   private Location town;
 }

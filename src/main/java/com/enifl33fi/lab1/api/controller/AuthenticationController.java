@@ -39,7 +39,7 @@ public class AuthenticationController {
 
   @PostMapping("/refresh")
   @ResponseBody
-  public ResponseEntity<AuthenticationResponseDto> getToken(
+  public ResponseEntity<AuthenticationResponseDto> getTokens(
       @RequestBody RefreshJwtRequestDto request) {
     return ResponseEntity.ok(authenticationService.getTokens(request.getRefreshToken()));
   }

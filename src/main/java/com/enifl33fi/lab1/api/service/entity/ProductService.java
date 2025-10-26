@@ -1,7 +1,9 @@
 package com.enifl33fi.lab1.api.service.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.ProductRequestDto;
+import com.enifl33fi.lab1.api.dto.response.entity.PersonResponseDto;
 import com.enifl33fi.lab1.api.dto.response.entity.ProductResponseDto;
+import com.enifl33fi.lab1.api.mapper.entity.PersonMapper;
 import com.enifl33fi.lab1.api.mapper.entity.ProductMapper;
 import com.enifl33fi.lab1.api.model.product.*;
 import com.enifl33fi.lab1.api.repository.entity.ProductRepository;
@@ -21,40 +23,46 @@ public class ProductService
         Product, ProductRequestDto, ProductResponseDto, ProductMapper, ProductRepository> {
   private final ProductRepository productRepository;
   private final ProductMapper productMapper;
+  private final PersonMapper personMapper;
 
   @Autowired
   public ProductService(
       ValidatingService validatingService,
       ProductRepository productRepository,
       WebSocketService webSocketService,
-      ProductMapper productMapper) {
+      ProductMapper productMapper,
+      PersonMapper personMapper
+  ) {
     super(productMapper, productRepository, validatingService, webSocketService, "product");
     this.productRepository = productRepository;
     this.productMapper = productMapper;
+    this.personMapper = personMapper;
   }
 
-  public int countProductsByOwnerLessThan(Integer ownerId) {
-    return productRepository.countByOwnerLessThan(ownerId);
+  public Double getAverageRating() {
+    return productRepository.findAverageRating();
   }
 
-  public List<ProductResponseDto> findProductsByPartNumberContaining(String substring) {
-    return productRepository.findByPartNumberContaining(substring).stream()
-        .map(productMapper::mapToResponse)
-        .collect(Collectors.toList());
+  public int countProductsByRating(Integer rating) {
+    return productRepository.countByRating(rating);
   }
 
-  public List<Integer> getDistinctRatings() {
-    return productRepository.findDistinctRatings();
+  public List<PersonResponseDto> getDistinctOwners() {
+    return productRepository.findDistinctOwners().stream()
+            .map(personMapper::mapToResponse)
+            .collect(Collectors.toList());
   }
 
-  public List<ProductResponseDto> findProductsByManufacturer(Integer manufacturerId) {
-    return productRepository.findByManufacturer(manufacturerId).stream()
-        .map(productMapper::mapToResponse)
-        .collect(Collectors.toList());
+  public List<ProductResponseDto> findProductsByUnitOfMeasure(List<UnitOfMeasure> unitOfMeasures) {
+    return productRepository.findByUnitOfMeasureIn(unitOfMeasures).stream()
+            .map(productMapper::mapToResponse)
+            .collect(Collectors.toList());
   }
 
   @Transactional
-  public void decreaseProductsPriceByPercentage(double percent, Integer manufacturerId) {
-    productRepository.decreasePriceByPercentage(percent, manufacturerId);
+  public void decreaseAllPricesByPercentage(double percent) {
+    productRepository.decreaseAllPricesByPercentage(percent);
+    this.notifyClients();
+
   }
 }

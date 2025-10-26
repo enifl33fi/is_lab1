@@ -12,7 +12,5 @@ public class OrganizationResponseDto extends OrganizationDto implements OwnedEnt
 
   private AddressResponseDto officialAddress;
 
-  private AddressResponseDto postalAddress;
-
   private boolean hasAccess;
 }

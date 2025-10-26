@@ -2,6 +2,7 @@ package com.enifl33fi.lab1.api.service.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.OwnedEntityRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.AccessAware;
+import com.enifl33fi.lab1.api.dto.response.entity.Identifiable;
 import com.enifl33fi.lab1.api.dto.response.entity.OwnedEntityResponseDto;
 import com.enifl33fi.lab1.api.exception.NotFoundException;
 import com.enifl33fi.lab1.api.mapper.entity.OwnedEntityMapper;
@@ -29,18 +30,18 @@ public class OwnedEntityService<
   private final String entityType;
 
   protected void notifyClients() {
-    List<RES> entities = getAllEntities();
-    webSocketService.notifyEntitiesChanged(entityType, entities);
+    webSocketService.notifyEntitiesChanged(entityType);
   }
 
   public List<RES> getAllEntities() {
     return repo.findAll().stream().map(mapper::mapToResponse).collect(Collectors.toList());
   }
 
-  public List<RES> getAllEditableEntities() {
+  public List<Integer> getAllEditableEntitiesIds() {
     return repo.findAll().stream()
         .map(mapper::mapToResponse)
         .filter((AccessAware::isHasAccess))
+        .map(Identifiable::getId)
         .collect(Collectors.toList());
   }
 
@@ -59,14 +60,15 @@ public class OwnedEntityService<
   }
 
   @Transactional
-  public void saveEntity(REQ dto) {
+  public RES saveEntity(REQ dto) {
     validatingService.validateEntity(dto);
-    repo.save(mapper.mapFromRequest(dto));
+    E entity = repo.saveAndFlush(mapper.mapFromRequest(dto));
     notifyClients();
+    return mapper.mapToResponse(entity);
   }
 
   @Transactional
-  public void updateEntity(REQ dto, Integer id) {
+  public RES updateEntity(REQ dto, Integer id) {
     validatingService.validateEntity(dto);
 
     E existingEntity = getRawEntityById(id);
@@ -77,8 +79,10 @@ public class OwnedEntityService<
     updatedEntity.setUser(existingEntity.getUser());
     updatedEntity.setCreationDate(existingEntity.getCreationDate());
 
-    repo.save(updatedEntity);
+    E entity = repo.saveAndFlush(updatedEntity);
     notifyClients();
+
+    return mapper.mapToResponse(entity);
   }
 
   @Transactional

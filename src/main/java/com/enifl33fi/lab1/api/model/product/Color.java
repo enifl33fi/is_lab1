@@ -1,8 +1,9 @@
 package com.enifl33fi.lab1.api.model.product;
 
 public enum Color {
-  GREEN,
-  RED,
+  BLACK,
   BLUE,
+  YELLOW,
+  ORANGE,
   BROWN;
 }

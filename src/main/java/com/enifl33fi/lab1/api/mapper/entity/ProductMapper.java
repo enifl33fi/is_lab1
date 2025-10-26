@@ -38,18 +38,30 @@ public abstract class ProductMapper
   public abstract Product mapFromRequest(ProductRequestDto request);
 
   protected Coordinates findCoordinatesById(Integer id) {
+    if (id == null) {
+      return null;
+    }
+
     return coordinatesRepository
         .findById(id)
         .orElseThrow(() -> new NotFoundException("Coordinates not found"));
   }
 
   protected Organization findOrganizationById(Integer id) {
+    if (id == null) {
+      return null;
+    }
+
     return organizationRepository
         .findById(id)
         .orElseThrow(() -> new NotFoundException("Organization not found"));
   }
 
   protected Person findPersonById(Integer id) {
+    if (id == null) {
+      return null;
+    }
+
     return personRepository
         .findById(id)
         .orElseThrow(() -> new NotFoundException("Person not found"));

@@ -19,20 +19,16 @@ public class Organization extends OwnedEntity {
   @CascadeOnDelete
   private Address officialAddress;
 
-  @Column(nullable = false)
-  private Float annualTurnover;
+  @Column
+  private Integer annualTurnover;
 
   @Column(nullable = false)
-  private long employeesCount;
-
-  @Column(nullable = false)
-  private String fullName;
+  private Long employeesCount;
 
   @Column(nullable = false)
   private Float rating;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "postal_address_id", referencedColumnName = "id", nullable = false)
-  @CascadeOnDelete
-  private Address postalAddress;
+  @Column(nullable = false)
+  @Enumerated(value = EnumType.STRING)
+  private OrganizationType type;
 }

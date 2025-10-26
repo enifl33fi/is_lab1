@@ -18,17 +18,17 @@ public class Person extends OwnedEntity {
   @Enumerated(value = EnumType.STRING)
   private Color eyeColor;
 
-  @Column(nullable = false)
+  @Column
   @Enumerated(value = EnumType.STRING)
   private Color hairColor;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "location_id", referencedColumnName = "id")
   @CascadeOnDelete
   private Location location;
 
-  @Column(nullable = false)
-  private java.time.ZonedDateTime birthday;
+  @Column
+  private Integer weight;
 
   @Column(nullable = false)
   @Enumerated(value = EnumType.STRING)

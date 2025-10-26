@@ -1,9 +1,11 @@
 package com.enifl33fi.lab1.api.controller.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.ProductRequestDto;
+import com.enifl33fi.lab1.api.dto.response.entity.PersonResponseDto;
 import com.enifl33fi.lab1.api.dto.response.entity.ProductResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.ProductMapper;
 import com.enifl33fi.lab1.api.model.product.Product;
+import com.enifl33fi.lab1.api.model.product.UnitOfMeasure;
 import com.enifl33fi.lab1.api.repository.entity.ProductRepository;
 import com.enifl33fi.lab1.api.service.entity.ProductService;
 import java.util.List;
@@ -29,25 +31,34 @@ public class ProductController
     this.productService = productService;
   }
 
-  @GetMapping("/count_owner_less_than/{id}")
-  public ResponseEntity<Integer> countOwnerLessThan(@PathVariable Integer id) {
-    return ResponseEntity.ok(productService.countProductsByOwnerLessThan(id));
+  @GetMapping("/average-rating")
+  public ResponseEntity<Double> getAverageRating() {
+    Double averageRating = productService.getAverageRating();
+    return ResponseEntity.ok(averageRating);
   }
 
-  @GetMapping("/find_by_part_number")
-  public ResponseEntity<List<ProductResponseDto>> findByPartNumber(
-      @RequestParam String partNumber) {
-    return ResponseEntity.ok(productService.findProductsByPartNumberContaining(partNumber));
+  @GetMapping("/count-by-rating/{rating}")
+  public ResponseEntity<Integer> countByRating(@PathVariable Integer rating) {
+    int count = productService.countProductsByRating(rating);
+    return ResponseEntity.ok(count);
   }
 
-  @GetMapping("/ratings")
-  public ResponseEntity<List<Integer>> findRatings() {
-    return ResponseEntity.ok(productService.getDistinctRatings());
+  @GetMapping("/distinct-owners")
+  public ResponseEntity<List<PersonResponseDto>> getDistinctOwners() {
+    List<PersonResponseDto> owners = productService.getDistinctOwners();
+    return ResponseEntity.ok(owners);
   }
 
-  @PatchMapping("/decrease-price/{id})")
-  public ResponseEntity<?> decreasePrice(@PathVariable Integer id, @RequestBody Double percent) {
-    productService.decreaseProductsPriceByPercentage(percent, id);
+  @GetMapping("/by-unit-of-measure")
+  public ResponseEntity<List<ProductResponseDto>> getProductsByUnitOfMeasure(
+          @RequestParam List<UnitOfMeasure> unitOfMeasures) {
+    List<ProductResponseDto> products = productService.findProductsByUnitOfMeasure(unitOfMeasures);
+    return ResponseEntity.ok(products);
+  }
+
+  @PatchMapping("/decrease-all-prices")
+  public ResponseEntity<?> decreaseAllPrices(@RequestBody Double percent) {
+    productService.decreaseAllPricesByPercentage(percent);
     return ResponseEntity.ok().build();
   }
 }

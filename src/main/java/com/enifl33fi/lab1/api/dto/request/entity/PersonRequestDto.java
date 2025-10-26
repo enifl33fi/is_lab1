@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class PersonRequestDto extends PersonDto implements OwnedEntityRequestDto {
-  @NotNull private Integer locationId;
+  private Integer locationId;
 
   private Boolean adminPermission;
 }

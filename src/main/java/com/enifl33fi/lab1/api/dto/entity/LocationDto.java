@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocationDto {
-  private long x;
-  private long y;
-  @NotNull private Integer z;
+  @NotNull
+  private Float x;
 
-  @Size(max = 779)
-  private String name;
+  @NotNull
+  private Float y;
+
+  @NotNull
+  private Float z;
 }

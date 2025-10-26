@@ -30,8 +30,8 @@ public class OwnedEntityController<
 
   @GetMapping("/own")
   @ResponseBody
-  public ResponseEntity<List<RES>> getOwnEntities() {
-    return ResponseEntity.ok(service.getAllEditableEntities());
+  public ResponseEntity<List<Integer>> getOwnEntities() {
+    return ResponseEntity.ok(service.getAllEditableEntitiesIds());
   }
 
   @GetMapping("/{id}")
@@ -50,16 +50,14 @@ public class OwnedEntityController<
 
   @PostMapping
   @ResponseBody
-  public ResponseEntity<?> saveEntity(@RequestBody REQ entity) {
-    service.saveEntity(entity);
-    return ResponseEntity.ok().build();
+  public ResponseEntity<RES> saveEntity(@RequestBody REQ entity) {
+    return ResponseEntity.ok(service.saveEntity(entity));
   }
 
   @PatchMapping("/{id}")
   @ResponseBody
-  public ResponseEntity<?> updateEntity(@PathVariable("id") Integer id, @RequestBody REQ entity) {
-    service.updateEntity(entity, id);
-    return ResponseEntity.ok().build();
+  public ResponseEntity<RES> updateEntity(@PathVariable("id") Integer id, @RequestBody REQ entity) {
+    return ResponseEntity.ok(service.updateEntity(entity, id));
   }
 
   @DeleteMapping("/{id}")

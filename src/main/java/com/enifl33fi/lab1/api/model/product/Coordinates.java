@@ -12,8 +12,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 public class Coordinates extends OwnedEntity {
   @Column(nullable = false)
-  private int x;
+  private Float x;
 
   @Column(nullable = false)
-  private Float y;
+  private Double y;
 }

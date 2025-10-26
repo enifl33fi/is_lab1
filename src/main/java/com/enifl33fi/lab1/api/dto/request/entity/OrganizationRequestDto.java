@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class OrganizationRequestDto extends OrganizationDto implements OwnedEntityRequestDto {
-  @NotNull private Integer officialAddressId;
-  @NotNull private Integer postalAddressId;
+  @NotNull
+  private Integer officialAddressId;;
 
   private Boolean adminPermission;
 }

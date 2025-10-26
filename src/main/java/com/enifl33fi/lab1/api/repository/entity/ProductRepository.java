@@ -1,6 +1,8 @@
 package com.enifl33fi.lab1.api.repository.entity;
 
 import com.enifl33fi.lab1.api.model.product.Product;
+import com.enifl33fi.lab1.api.model.product.Person;
+import com.enifl33fi.lab1.api.model.product.UnitOfMeasure;
 import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,21 +11,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends OwnedEntityRepository<Product> {
-  @Query("SELECT COUNT(p) FROM Product p WHERE p.owner.id < :ownerId")
-  int countByOwnerLessThan(@Param("ownerId") Integer ownerId);
+  @Query("SELECT AVG(p.rating) FROM Product p")
+  Double findAverageRating();
 
-  @Query("SELECT p FROM Product p WHERE p.partNumber LIKE %:substring%")
-  List<Product> findByPartNumberContaining(@Param("substring") String substring);
+  int countByRating(Integer rating);
 
-  @Query("SELECT DISTINCT p.rating FROM Product p")
-  List<Integer> findDistinctRatings();
+  @Query("SELECT DISTINCT p.owner FROM Product p WHERE p.owner IS NOT NULL")
+  List<Person> findDistinctOwners();
 
-  @Query("SELECT p FROM Product p WHERE p.manufacturer.id = :manufacturerId")
-  List<Product> findByManufacturer(@Param("manufacturerId") Integer manufacturerId);
+  List<Product> findByUnitOfMeasureIn(List<UnitOfMeasure> unitOfMeasures);
 
   @Modifying
-  @Query(
-      "UPDATE Product p SET p.price = p.price * (1 - :percent / 100) WHERE p.manufacturer.id = :manufacturerId")
-  void decreasePriceByPercentage(
-      @Param("percent") double percent, @Param("manufacturerId") Integer manufacturerId);
+  @Query("UPDATE Product p SET p.price = p.price * (1 - :percent / 100.0)")
+  void decreaseAllPricesByPercentage(@Param("percent") double percent);
 }
