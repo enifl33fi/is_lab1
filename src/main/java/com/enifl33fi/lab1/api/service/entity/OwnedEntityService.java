@@ -10,10 +10,18 @@ import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
 import com.enifl33fi.lab1.api.repository.entity.OwnedEntityRepository;
 import com.enifl33fi.lab1.api.service.ValidatingService;
 import com.enifl33fi.lab1.api.service.WebSocketService;
+import com.enifl33fi.lab1.api.utils.helpers.FilterParser;
+import com.enifl33fi.lab1.api.utils.helpers.SortParser;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
@@ -28,13 +36,26 @@ public class OwnedEntityService<
   private final ValidatingService validatingService;
   private final WebSocketService webSocketService;
   private final String entityType;
+  @Autowired private FilterParser<E> filterParser;
+  @Autowired private SortParser sortParser;
 
   protected void notifyClients() {
     webSocketService.notifyEntitiesChanged(entityType);
   }
 
-  public List<RES> getAllEntities() {
-    return repo.findAll().stream().map(mapper::mapToResponse).collect(Collectors.toList());
+  public Page<RES> getAllEntities(
+      Map<String, String> filtersValues,
+      String sortBy,
+      Integer sortDirection,
+      Integer page,
+      Integer size) {
+    Specification<E> specification = filterParser.parse(filtersValues);
+    Sort sort = sortParser.parse(sortBy, sortDirection);
+    Pageable pageable = PageRequest.of(page, size, sort);
+
+    Page<E> entitiesPage = repo.findAll(specification, pageable);
+
+    return entitiesPage.map(mapper::mapToResponse);
   }
 
   public List<Integer> getAllEditableEntitiesIds() {
