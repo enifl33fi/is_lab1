@@ -8,8 +8,8 @@ import com.enifl33fi.lab1.api.exception.NotFoundException;
 import com.enifl33fi.lab1.api.mapper.entity.OwnedEntityMapper;
 import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
 import com.enifl33fi.lab1.api.repository.entity.OwnedEntityRepository;
+import com.enifl33fi.lab1.api.service.EventPublisher;
 import com.enifl33fi.lab1.api.service.ValidatingService;
-import com.enifl33fi.lab1.api.service.WebSocketService;
 import com.enifl33fi.lab1.api.utils.helpers.FilterParser;
 import com.enifl33fi.lab1.api.utils.helpers.SortParser;
 import java.util.List;
@@ -34,14 +34,10 @@ public class OwnedEntityService<
   private final MAP mapper;
   private final REPO repo;
   private final ValidatingService validatingService;
-  private final WebSocketService webSocketService;
-  private final String entityType;
+  protected final EventPublisher eventPublisher;
+  protected final String entityType;
   @Autowired private FilterParser<E> filterParser;
   @Autowired private SortParser sortParser;
-
-  protected void notifyClients() {
-    webSocketService.notifyEntitiesChanged(entityType);
-  }
 
   public Page<RES> getAllEntities(
       Map<String, String> filtersValues,
@@ -84,7 +80,7 @@ public class OwnedEntityService<
   public RES saveEntity(REQ dto) {
     validatingService.validateEntity(dto);
     E entity = repo.saveAndFlush(mapper.mapFromRequest(dto));
-    notifyClients();
+    eventPublisher.publishEntityChangedEvent(entityType);
     return mapper.mapToResponse(entity);
   }
 
@@ -101,7 +97,7 @@ public class OwnedEntityService<
     updatedEntity.setCreationDate(existingEntity.getCreationDate());
 
     E entity = repo.saveAndFlush(updatedEntity);
-    notifyClients();
+    eventPublisher.publishEntityChangedEvent(entityType);
 
     return mapper.mapToResponse(entity);
   }
@@ -109,6 +105,6 @@ public class OwnedEntityService<
   @Transactional
   public void deleteEntity(Integer id) {
     repo.deleteById(id);
-    notifyClients();
+    eventPublisher.publishEntityChangedEvent(entityType);
   }
 }

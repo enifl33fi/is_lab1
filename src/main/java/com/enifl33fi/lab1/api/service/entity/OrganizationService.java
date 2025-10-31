@@ -5,8 +5,8 @@ import com.enifl33fi.lab1.api.dto.response.entity.OrganizationResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.OrganizationMapper;
 import com.enifl33fi.lab1.api.model.product.Organization;
 import com.enifl33fi.lab1.api.repository.entity.OrganizationRepository;
+import com.enifl33fi.lab1.api.service.EventPublisher;
 import com.enifl33fi.lab1.api.service.ValidatingService;
-import com.enifl33fi.lab1.api.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +23,13 @@ public class OrganizationService
   public OrganizationService(
       ValidatingService validatingService,
       OrganizationRepository organizationRepository,
-      WebSocketService webSocketService,
+      EventPublisher eventPublisher,
       OrganizationMapper organizationMapper) {
     super(
         organizationMapper,
         organizationRepository,
         validatingService,
-        webSocketService,
+        eventPublisher,
         "organization");
   }
 }

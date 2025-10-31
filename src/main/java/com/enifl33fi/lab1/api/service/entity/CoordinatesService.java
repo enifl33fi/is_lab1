@@ -5,8 +5,8 @@ import com.enifl33fi.lab1.api.dto.response.entity.CoordinatesResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.CoordinatesMapper;
 import com.enifl33fi.lab1.api.model.product.Coordinates;
 import com.enifl33fi.lab1.api.repository.entity.CoordinatesRepository;
+import com.enifl33fi.lab1.api.service.EventPublisher;
 import com.enifl33fi.lab1.api.service.ValidatingService;
-import com.enifl33fi.lab1.api.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +23,9 @@ public class CoordinatesService
   public CoordinatesService(
       ValidatingService validatingService,
       CoordinatesRepository coordinatesRepository,
-      WebSocketService webSocketService,
+      EventPublisher eventPublisher,
       CoordinatesMapper coordinatesMapper) {
     super(
-        coordinatesMapper,
-        coordinatesRepository,
-        validatingService,
-        webSocketService,
-        "coordinates");
+        coordinatesMapper, coordinatesRepository, validatingService, eventPublisher, "coordinates");
   }
 }

@@ -62,7 +62,12 @@ public class SecurityConfig implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry cors) {
-    cors.addMapping("/**").allowedOrigins(clientOrigin).allowedMethods("*").maxAge(3600);
+    cors.addMapping("/**")
+        .allowedOrigins(clientOrigin)
+        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
+        .allowedHeaders("*")
+        .allowCredentials(true)
+        .maxAge(3600);
   }
 
   @Bean

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
   private final UserRepository userRepository;
-  private final WebSocketService webSocketService;
+  private final EventPublisher eventPublisher;
   private final AdminRegistrationRequestRepository adminRegistrationRequestRepository;
 
   @Override
@@ -39,12 +39,12 @@ public class UserService implements UserDetailsService {
 
   public void saveRequest(AdminRegistrationRequest request) {
     adminRegistrationRequestRepository.save(request);
-    webSocketService.notifyAdminRequestsChanged();
+    eventPublisher.publishAdminRequestChangedEvent();
   }
 
   public void deleteRequest(AdminRegistrationRequest request) {
     adminRegistrationRequestRepository.delete(request);
-    webSocketService.notifyAdminRequestsChanged();
+    eventPublisher.publishAdminRequestChangedEvent();
   }
 
   public List<AdminRegistrationRequest> getRequests() {

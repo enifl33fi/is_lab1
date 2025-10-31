@@ -5,8 +5,8 @@ import com.enifl33fi.lab1.api.dto.response.entity.LocationResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.LocationMapper;
 import com.enifl33fi.lab1.api.model.product.Location;
 import com.enifl33fi.lab1.api.repository.entity.LocationRepository;
+import com.enifl33fi.lab1.api.service.EventPublisher;
 import com.enifl33fi.lab1.api.service.ValidatingService;
-import com.enifl33fi.lab1.api.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +19,8 @@ public class LocationService
   public LocationService(
       ValidatingService validatingService,
       LocationRepository locationRepository,
-      WebSocketService webSocketService,
+      EventPublisher eventPublisher,
       LocationMapper locationMapper) {
-    super(locationMapper, locationRepository, validatingService, webSocketService, "location");
+    super(locationMapper, locationRepository, validatingService, eventPublisher, "location");
   }
 }

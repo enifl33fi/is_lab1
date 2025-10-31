@@ -7,8 +7,8 @@ import com.enifl33fi.lab1.api.mapper.entity.PersonMapper;
 import com.enifl33fi.lab1.api.mapper.entity.ProductMapper;
 import com.enifl33fi.lab1.api.model.product.*;
 import com.enifl33fi.lab1.api.repository.entity.ProductRepository;
+import com.enifl33fi.lab1.api.service.EventPublisher;
 import com.enifl33fi.lab1.api.service.ValidatingService;
-import com.enifl33fi.lab1.api.service.WebSocketService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j2;
@@ -29,11 +29,10 @@ public class ProductService
   public ProductService(
       ValidatingService validatingService,
       ProductRepository productRepository,
-      WebSocketService webSocketService,
+      EventPublisher eventPublisher,
       ProductMapper productMapper,
-      PersonMapper personMapper
-  ) {
-    super(productMapper, productRepository, validatingService, webSocketService, "product");
+      PersonMapper personMapper) {
+    super(productMapper, productRepository, validatingService, eventPublisher, "product");
     this.productRepository = productRepository;
     this.productMapper = productMapper;
     this.personMapper = personMapper;
@@ -49,20 +48,19 @@ public class ProductService
 
   public List<PersonResponseDto> getDistinctOwners() {
     return productRepository.findDistinctOwners().stream()
-            .map(personMapper::mapToResponse)
-            .collect(Collectors.toList());
+        .map(personMapper::mapToResponse)
+        .collect(Collectors.toList());
   }
 
   public List<ProductResponseDto> findProductsByUnitOfMeasure(List<UnitOfMeasure> unitOfMeasures) {
     return productRepository.findByUnitOfMeasureIn(unitOfMeasures).stream()
-            .map(productMapper::mapToResponse)
-            .collect(Collectors.toList());
+        .map(productMapper::mapToResponse)
+        .collect(Collectors.toList());
   }
 
   @Transactional
   public void decreaseAllPricesByPercentage(double percent) {
     productRepository.decreaseAllPricesByPercentage(percent);
-    this.notifyClients();
-
+    this.eventPublisher.publishEntityChangedEvent(this.entityType);
   }
 }
