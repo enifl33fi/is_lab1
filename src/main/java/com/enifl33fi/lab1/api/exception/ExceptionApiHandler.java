@@ -24,7 +24,9 @@ public class ExceptionApiHandler {
     UsernameNotUniqueException.class,
     ConstraintViolationException.class,
     MethodArgumentNotValidException.class,
-    NotFoundException.class
+    NotFoundException.class,
+    ImportFileException.class,
+    IllegalArgumentException.class,
   })
   public ResponseEntity<ErrorResponseDto> badRequestHandler(Exception e) {
     return ResponseEntity.badRequest()

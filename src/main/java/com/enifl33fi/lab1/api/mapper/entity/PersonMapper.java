@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.mapper.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.PersonRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.PersonImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.PersonResponseDto;
 import com.enifl33fi.lab1.api.exception.NotFoundException;
 import com.enifl33fi.lab1.api.model.product.Location;
@@ -15,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
     componentModel = "spring",
     uses = {LocationMapper.class})
 public abstract class PersonMapper
-    extends OwnedEntityMapper<Person, PersonRequestDto, PersonResponseDto> {
+    extends OwnedEntityMapper<Person, PersonRequestDto, PersonImportRequestDto, PersonResponseDto> {
   private LocationRepository locationRepository;
 
   @Override

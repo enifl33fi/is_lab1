@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.service.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.AddressRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.AddressImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.AddressResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.AddressMapper;
 import com.enifl33fi.lab1.api.model.product.Address;
@@ -13,7 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddressService
     extends OwnedEntityService<
-        Address, AddressRequestDto, AddressResponseDto, AddressMapper, AddressRepository> {
+        Address,
+        AddressRequestDto,
+        AddressImportRequestDto,
+        AddressResponseDto,
+        AddressMapper,
+        AddressRepository> {
 
   @Autowired
   public AddressService(

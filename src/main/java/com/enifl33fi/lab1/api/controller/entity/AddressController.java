@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.controller.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.AddressRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.AddressImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.AddressResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.AddressMapper;
 import com.enifl33fi.lab1.api.model.product.Address;
@@ -16,6 +17,7 @@ public class AddressController
     extends OwnedEntityController<
         Address,
         AddressRequestDto,
+        AddressImportRequestDto,
         AddressResponseDto,
         AddressMapper,
         AddressRepository,

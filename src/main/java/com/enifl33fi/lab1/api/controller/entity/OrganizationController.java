@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.controller.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.OrganizationRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.OrganizationImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.OrganizationResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.OrganizationMapper;
 import com.enifl33fi.lab1.api.model.product.Organization;
@@ -16,6 +17,7 @@ public class OrganizationController
     extends OwnedEntityController<
         Organization,
         OrganizationRequestDto,
+        OrganizationImportRequestDto,
         OrganizationResponseDto,
         OrganizationMapper,
         OrganizationRepository,

@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.controller.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.ProductRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.ProductImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.PersonResponseDto;
 import com.enifl33fi.lab1.api.dto.response.entity.ProductResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.ProductMapper;
@@ -19,6 +20,7 @@ public class ProductController
     extends OwnedEntityController<
         Product,
         ProductRequestDto,
+        ProductImportRequestDto,
         ProductResponseDto,
         ProductMapper,
         ProductRepository,
@@ -51,7 +53,7 @@ public class ProductController
 
   @GetMapping("/by-unit-of-measure")
   public ResponseEntity<List<ProductResponseDto>> getProductsByUnitOfMeasure(
-          @RequestParam List<UnitOfMeasure> unitOfMeasures) {
+      @RequestParam List<UnitOfMeasure> unitOfMeasures) {
     List<ProductResponseDto> products = productService.findProductsByUnitOfMeasure(unitOfMeasures);
     return ResponseEntity.ok(products);
   }

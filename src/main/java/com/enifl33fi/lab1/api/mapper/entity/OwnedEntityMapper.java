@@ -9,7 +9,10 @@ import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class OwnedEntityMapper<
-    E extends OwnedEntity, REQ extends OwnedEntityRequestDto, RES extends OwnedEntityResponseDto> {
+    E extends OwnedEntity,
+    REQ extends OwnedEntityRequestDto,
+    IREQ extends OwnedEntityRequestDto,
+    RES extends OwnedEntityResponseDto> {
   protected AccessService accessService;
 
   @Mapping(target = "hasAccess", expression = "java(accessService.checkAccess(entity))")
@@ -22,6 +25,14 @@ public abstract class OwnedEntityMapper<
     @Mapping(target = "adminPermission", defaultValue = "false"),
   })
   public abstract E mapFromRequest(REQ request);
+
+  @Mappings({
+    @Mapping(target = "user", ignore = true),
+    @Mapping(target = "id", ignore = true),
+    @Mapping(target = "creationDate", ignore = true),
+    @Mapping(target = "adminPermission", defaultValue = "false"),
+  })
+  public abstract E mapFromImportRequest(IREQ request);
 
   @Autowired
   private void setAccessService(AccessService accessService) {

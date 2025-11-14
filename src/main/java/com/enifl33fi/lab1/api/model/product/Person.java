@@ -22,13 +22,12 @@ public class Person extends OwnedEntity {
   @Enumerated(value = EnumType.STRING)
   private Color hairColor;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "location_id", referencedColumnName = "id")
   @CascadeOnDelete
   private Location location;
 
-  @Column
-  private Integer weight;
+  @Column private Integer weight;
 
   @Column(nullable = false)
   @Enumerated(value = EnumType.STRING)

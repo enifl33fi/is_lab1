@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.service.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.PersonRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.PersonImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.PersonResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.PersonMapper;
 import com.enifl33fi.lab1.api.model.product.Person;
@@ -13,7 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonService
     extends OwnedEntityService<
-        Person, PersonRequestDto, PersonResponseDto, PersonMapper, PersonRepository> {
+        Person,
+        PersonRequestDto,
+        PersonImportRequestDto,
+        PersonResponseDto,
+        PersonMapper,
+        PersonRepository> {
 
   @Autowired
   public PersonService(

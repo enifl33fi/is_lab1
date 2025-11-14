@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.controller.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.LocationRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.LocationImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.LocationResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.LocationMapper;
 import com.enifl33fi.lab1.api.model.product.Location;
@@ -16,6 +17,7 @@ public class LocationController
     extends OwnedEntityController<
         Location,
         LocationRequestDto,
+        LocationImportRequestDto,
         LocationResponseDto,
         LocationMapper,
         LocationRepository,

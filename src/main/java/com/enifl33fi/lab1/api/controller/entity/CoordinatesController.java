@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.controller.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.CoordinatesRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.CoordinatesImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.CoordinatesResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.CoordinatesMapper;
 import com.enifl33fi.lab1.api.model.product.Coordinates;
@@ -16,6 +17,7 @@ public class CoordinatesController
     extends OwnedEntityController<
         Coordinates,
         CoordinatesRequestDto,
+        CoordinatesImportRequestDto,
         CoordinatesResponseDto,
         CoordinatesMapper,
         CoordinatesRepository,

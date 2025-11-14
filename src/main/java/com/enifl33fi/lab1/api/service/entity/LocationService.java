@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.service.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.LocationRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.LocationImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.LocationResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.LocationMapper;
 import com.enifl33fi.lab1.api.model.product.Location;
@@ -13,7 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocationService
     extends OwnedEntityService<
-        Location, LocationRequestDto, LocationResponseDto, LocationMapper, LocationRepository> {
+        Location,
+        LocationRequestDto,
+        LocationImportRequestDto,
+        LocationResponseDto,
+        LocationMapper,
+        LocationRepository> {
 
   @Autowired
   public LocationService(

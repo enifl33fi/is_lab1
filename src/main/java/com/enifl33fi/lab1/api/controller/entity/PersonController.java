@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.controller.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.PersonRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.PersonImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.PersonResponseDto;
 import com.enifl33fi.lab1.api.mapper.entity.PersonMapper;
 import com.enifl33fi.lab1.api.model.product.Person;
@@ -16,6 +17,7 @@ public class PersonController
     extends OwnedEntityController<
         Person,
         PersonRequestDto,
+        PersonImportRequestDto,
         PersonResponseDto,
         PersonMapper,
         PersonRepository,

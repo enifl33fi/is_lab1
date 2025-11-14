@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.mapper.entity;
 
 import com.enifl33fi.lab1.api.dto.request.entity.OrganizationRequestDto;
+import com.enifl33fi.lab1.api.dto.request.file.OrganizationImportRequestDto;
 import com.enifl33fi.lab1.api.dto.response.entity.OrganizationResponseDto;
 import com.enifl33fi.lab1.api.exception.NotFoundException;
 import com.enifl33fi.lab1.api.model.product.Address;
@@ -15,7 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
     componentModel = "spring",
     uses = {AddressMapper.class})
 public abstract class OrganizationMapper
-    extends OwnedEntityMapper<Organization, OrganizationRequestDto, OrganizationResponseDto> {
+    extends OwnedEntityMapper<
+        Organization,
+        OrganizationRequestDto,
+        OrganizationImportRequestDto,
+        OrganizationResponseDto> {
   private AddressRepository addressRepository;
 
   @Override

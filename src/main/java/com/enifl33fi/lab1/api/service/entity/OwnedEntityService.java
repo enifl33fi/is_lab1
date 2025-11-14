@@ -22,18 +22,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 public class OwnedEntityService<
     E extends OwnedEntity,
     REQ extends OwnedEntityRequestDto,
+    IREQ extends OwnedEntityRequestDto,
     RES extends OwnedEntityResponseDto,
-    MAP extends OwnedEntityMapper<E, REQ, RES>,
+    MAP extends OwnedEntityMapper<E, REQ, IREQ, RES>,
     REPO extends OwnedEntityRepository<E>> {
   private final MAP mapper;
   private final REPO repo;
-  private final ValidatingService validatingService;
+  protected final ValidatingService validatingService;
   protected final EventPublisher eventPublisher;
   protected final String entityType;
   @Autowired private FilterParser<E> filterParser;
@@ -76,7 +79,7 @@ public class OwnedEntityService<
         .orElseThrow(() -> new NotFoundException(String.format("Entity with id %d not found", id)));
   }
 
-  @Transactional
+  @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
   public RES saveEntity(REQ dto) {
     validatingService.validateEntity(dto);
     E entity = repo.saveAndFlush(mapper.mapFromRequest(dto));
@@ -84,7 +87,7 @@ public class OwnedEntityService<
     return mapper.mapToResponse(entity);
   }
 
-  @Transactional
+  @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
   public RES updateEntity(REQ dto, Integer id) {
     validatingService.validateEntity(dto);
 
@@ -102,7 +105,7 @@ public class OwnedEntityService<
     return mapper.mapToResponse(entity);
   }
 
-  @Transactional
+  @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
   public void deleteEntity(Integer id) {
     repo.deleteById(id);
     eventPublisher.publishEntityChangedEvent(entityType);

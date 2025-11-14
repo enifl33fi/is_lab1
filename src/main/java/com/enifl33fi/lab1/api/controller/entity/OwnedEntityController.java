@@ -18,10 +18,11 @@ import org.springframework.web.bind.annotation.*;
 public class OwnedEntityController<
     E extends OwnedEntity,
     REQ extends OwnedEntityRequestDto,
+    IREQ extends OwnedEntityRequestDto,
     RES extends OwnedEntityResponseDto,
-    MAP extends OwnedEntityMapper<E, REQ, RES>,
+    MAP extends OwnedEntityMapper<E, REQ, IREQ, RES>,
     REPO extends OwnedEntityRepository<E>,
-    SERV extends OwnedEntityService<E, REQ, RES, MAP, REPO>> {
+    SERV extends OwnedEntityService<E, REQ, IREQ, RES, MAP, REPO>> {
 
   private final SERV service;
 

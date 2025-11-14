@@ -14,13 +14,12 @@ public class Organization extends OwnedEntity {
   @Column(nullable = false)
   private String name;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
   @JoinColumn(name = "official_address_id", referencedColumnName = "id", nullable = false)
   @CascadeOnDelete
   private Address officialAddress;
 
-  @Column
-  private Integer annualTurnover;
+  @Column private Integer annualTurnover;
 
   @Column(nullable = false)
   private Long employeesCount;

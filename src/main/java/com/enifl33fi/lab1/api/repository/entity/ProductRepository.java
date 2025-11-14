@@ -1,7 +1,7 @@
 package com.enifl33fi.lab1.api.repository.entity;
 
-import com.enifl33fi.lab1.api.model.product.Product;
 import com.enifl33fi.lab1.api.model.product.Person;
+import com.enifl33fi.lab1.api.model.product.Product;
 import com.enifl33fi.lab1.api.model.product.UnitOfMeasure;
 import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends OwnedEntityRepository<Product> {
+  @Query("SELECT p.name FROM Product p WHERE p.name IN :names")
+  List<String> findExistingNames(@Param("names") List<String> names);
+
   @Query("SELECT AVG(p.rating) FROM Product p")
   Double findAverageRating();
 

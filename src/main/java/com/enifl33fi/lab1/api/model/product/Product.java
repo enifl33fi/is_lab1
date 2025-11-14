@@ -14,7 +14,7 @@ public class Product extends OwnedEntity {
   @Column(nullable = false)
   private String name;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
   @JoinColumn(name = "coordinates_id", referencedColumnName = "id", nullable = false)
   @CascadeOnDelete
   private Coordinates coordinates;
@@ -23,7 +23,7 @@ public class Product extends OwnedEntity {
   @Enumerated(value = EnumType.STRING)
   private UnitOfMeasure unitOfMeasure;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "organization_id", referencedColumnName = "id")
   @CascadeOnDelete
   private Organization manufacturer;
@@ -37,7 +37,7 @@ public class Product extends OwnedEntity {
   @Column(nullable = false)
   private Integer rating;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "person_id", referencedColumnName = "id")
   @CascadeOnDelete
   private Person owner;
