@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.eclipse.persistence.annotations.CascadeOnDelete;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @MappedSuperclass
 @Getter
@@ -19,7 +20,7 @@ public class OwnedEntity {
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "created_by", referencedColumnName = "username", nullable = false)
-  @CascadeOnDelete
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private User user;
 
   @Column(name = "creation_date", nullable = false, updatable = false)
@@ -27,4 +28,6 @@ public class OwnedEntity {
 
   @Column(name = "admin_permission", nullable = false)
   private boolean adminPermission;
+
+  private String fileUrl;
 }

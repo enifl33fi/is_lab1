@@ -1,6 +1,7 @@
 package com.enifl33fi.lab1.api.model.product;
 
 import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -10,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@Cacheable
 public class Location extends OwnedEntity {
   @Column(nullable = false)
   private Float x;

@@ -76,4 +76,17 @@ public class ExceptionApiHandler {
                 .message(e.getMessage())
                 .build());
   }
+
+  @ResponseStatus(code = HttpStatus.SERVICE_UNAVAILABLE)
+  @ResponseBody
+  @ExceptionHandler({XAResourceIsNotReadyException.class})
+  public ResponseEntity<ErrorResponseDto> serviceUnavailableHandler(Exception e) {
+    return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+        .body(
+            ErrorResponseDto.builder()
+                .status(HttpStatus.SERVICE_UNAVAILABLE.value())
+                .statusText(HttpStatus.SERVICE_UNAVAILABLE.getReasonPhrase())
+                .message(e.getMessage())
+                .build());
+  }
 }

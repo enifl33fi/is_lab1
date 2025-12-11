@@ -3,20 +3,22 @@ package com.enifl33fi.lab1.api.model.product;
 import com.enifl33fi.lab1.api.model.utils.OwnedEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.eclipse.persistence.annotations.CascadeOnDelete;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@Cacheable
 public class Organization extends OwnedEntity {
   @Column(nullable = false)
   private String name;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
   @JoinColumn(name = "official_address_id", referencedColumnName = "id", nullable = false)
-  @CascadeOnDelete
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private Address officialAddress;
 
   @Column private Integer annualTurnover;

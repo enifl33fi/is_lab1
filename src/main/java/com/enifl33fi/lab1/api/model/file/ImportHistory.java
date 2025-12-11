@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Cacheable
 public class ImportHistory extends OwnedEntity {
   @Column(nullable = false)
   @Enumerated(value = EnumType.STRING)

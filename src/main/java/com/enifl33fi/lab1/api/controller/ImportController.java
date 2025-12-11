@@ -1,12 +1,10 @@
 package com.enifl33fi.lab1.api.controller;
 
 import com.enifl33fi.lab1.api.dto.response.ImportHistoryResponseDto;
-import com.enifl33fi.lab1.api.exception.ImportFileException;
 import com.enifl33fi.lab1.api.mapper.ImportHistoryMapper;
 import com.enifl33fi.lab1.api.model.file.ImportHistory;
 import com.enifl33fi.lab1.api.model.user.User;
 import com.enifl33fi.lab1.api.service.ImportService;
-import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +31,7 @@ public class ImportController {
   @ResponseBody
   public ResponseEntity<ImportHistory> getImportHistory(
       @RequestPart("file") MultipartFile file, @AuthenticationPrincipal User user) {
-    try {
-      importService.importProducts(file.getInputStream(), user);
-    } catch (IOException e) {
-      throw new ImportFileException();
-    }
+    importService.importProducts(file, user);
     return ResponseEntity.ok().build();
   }
 }

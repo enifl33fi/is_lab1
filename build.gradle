@@ -27,11 +27,7 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-data-jpa') {
-        exclude group: 'org.hibernate', module: 'hibernate-entitymanager'
-        exclude group: 'org.hibernate', module: 'hibernate-core'
-    }
-    implementation 'org.eclipse.persistence:org.eclipse.persistence.jpa:4.0.2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
@@ -49,6 +45,12 @@ dependencies {
 
     implementation 'org.mapstruct:mapstruct:1.6.3'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+
+    implementation 'org.infinispan:infinispan-hibernate-cache-v62:15.0.8.Final'
+
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    implementation 'io.minio:minio:8.5.9'
 
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

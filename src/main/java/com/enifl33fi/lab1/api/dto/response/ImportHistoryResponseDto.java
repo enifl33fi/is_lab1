@@ -15,4 +15,5 @@ public class ImportHistoryResponseDto {
   ImportStatus status;
   Integer importedCount;
   String user;
+  String fileUrl;
 }

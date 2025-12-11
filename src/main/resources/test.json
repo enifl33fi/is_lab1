@@ -1,6 +1,52 @@
 [
   {
-    "name": "123",
+    "name": "test1",
+    "coordinates": {
+      "x": 45.123,
+      "y": 67.890,
+      "adminPermission": false
+    },
+    "unitOfMeasure": "PCS",
+    "manufacturer": {
+      "rating": 7.0,
+      "name": "TechCorp",
+      "fullName": "Technology Corporation LLC",
+      "annualTurnover": 500000000,
+      "employeesCount": 2500,
+      "type": "COMMERCIAL",
+      "officialAddress": {
+        "zipCode": "123456",
+        "town": {
+          "x": 40.7128,
+          "y": 74.0060,
+          "z": 10.5,
+          "adminPermission": false
+        },
+        "adminPermission": false
+      },
+      "adminPermission": false
+    },
+    "price": 999,
+    "manufactureCost": 450,
+    "rating": 8,
+    "owner": {
+      "name": "John Smith",
+      "hairColor": "BROWN",
+      "eyeColor": "BROWN",
+      "weight": 100,
+      "nationality": "VATICAN",
+      "location": {
+        "x": 40.7128,
+        "y": 74.0060,
+        "z": 15.0,
+        "adminPermission": false
+      },
+      "adminPermission": false
+    },
+    "adminPermission": false
+  },
+  {
+    "name": "test2",
     "coordinates": {
       "x": 45.123,
       "y": 67.890,
